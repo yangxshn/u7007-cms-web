@@ -12,3 +12,6 @@
 ### git init
 ### git status
 ### git add .
+## git config --global user.email "yangxshn@126.com"
+## git config --global user.name "yangxshn"
+## git commit -m 'init my project'
