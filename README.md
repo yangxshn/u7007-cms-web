@@ -7,11 +7,3 @@
 ### MySql + SpringBoot2.0
 
 ## [常见的开源协议及其联系和区别？](https://www.cnblogs.com/datieli/p/10381703.html)
-
-## Git 相关命令
-### git init
-### git status
-### git add .
-## git config --global user.email "yangxshn@126.com"
-## git config --global user.name "yangxshn"
-## git commit -m 'init my project'
