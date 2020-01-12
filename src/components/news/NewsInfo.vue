@@ -20,7 +20,7 @@
 
 <script>
 import { Toast } from "mint-ui";
-import comment from "../common/comment.vue";
+import comment from "./comment.vue";
 
 export default {
   data() {

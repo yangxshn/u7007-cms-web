@@ -15,14 +15,33 @@ import VueResource from 'vue-resource'
 Vue.use(VueResource)
 // 设置请求的根路径
 Vue.http.options.root = 'http://127.0.0.1:9200';
+// 全局设置 post 时候表单数据的组织形式
+Vue.http.options.emulateJSON = true;
 
 // 按需导入 Mint-UI 的组件
 import 'mint-ui/lib/style.css'
-import { Header, Swipe, SwipeItem,Button } from 'mint-ui'
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
+
+/*import { Header, Swipe, SwipeItem,Button,Lazyload } from 'mint-ui'
 Vue.component(Header.name, Header);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Button.name, Button);
+Vue.use(Lazyload);*/
+
+// 安装图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview, {
+    mainClass: 'pswp--minimal--dark',
+    barsSize: { top: 0, bottom: 0 },
+    captionEl: false,
+    fullscreenEl: false,
+    shareEl: false,
+    bgOpacity: 0.85,
+    tapToClose: true,
+    tapToToggleControls: false
+})
 
 // 导入格式化时间的插件
 import moment from 'moment'

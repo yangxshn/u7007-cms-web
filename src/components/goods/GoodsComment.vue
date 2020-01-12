@@ -3,9 +3,9 @@
     <h3>发表评论</h3>
     <hr />
 
-    <textarea placeholder="请输入要BB的内容（最多BB120个字）" maxlength="120"></textarea>
+    <textarea placeholder="请输入要BB的内容（最多BB120个字）" maxlength="120" v-model="content"></textarea>
 
-    <mt-button type="primary" size="large">发表评论</mt-button>
+    <mt-button type="primary" size="large" @click="postComment">发表评论</mt-button>
 
     <div class="cmt-list">
       <div class="cmt-item" v-for="(item,index) in commentList" :key="item.commentId">
@@ -26,8 +26,10 @@ import { Toast } from "mint-ui";
 export default {
   data() {
     return {
-      pageIndex: 1,
-      commentList: []
+      pageIndex: 1, // 页码
+      commentList: [], // 评论列表
+      content: "", // 评论内容
+      goodsId:this.$route.params.goodsId
     };
   },
   created() {
@@ -37,16 +39,12 @@ export default {
     getCommentList() {
       // 获取评论
       this.$http
-        .get(
-          "api/getNewsCommentList/" +
-            this.newsId +
-            "?pageIndex=" +
-            this.pageIndex
+        .get("api/getGoodsCommentList/" + this.goodsId + "?pageIndex=" + this.pageIndex
         )
         .then(result => {
           if (result.body.code === 200) {
             // 拼接数组
-            this.commentList = this.commentList.concat(result.body.data)
+            this.commentList = this.commentList.concat(result.body.data);
           } else {
             Toast("查询评论列表失败");
           }
@@ -55,10 +53,33 @@ export default {
     getMore() {
       // 加载更多
       this.pageIndex++;
-      this.getCommentList()
+      this.getCommentList();
+    },
+    postComment() {
+      if (this.content.trim().length === 0) {
+        return Toast("评论内容不能为空");
+      }
+
+      this.$http
+        .post("api/postGoodsComment/" + this.goodsId, {
+          content: this.content.trim()
+        })
+        .then(function(result){
+          if (result.body.code === 200) {
+            // 拼接评论对象
+            var cmt = {
+              username: "test1",
+              createTime: Date.now(),
+              content: this.content.trim()
+            };
+            this.commentList.unshift(cmt);
+            this.content = "";
+          } else {
+            Toast(result.body.message);
+          }
+        });
     }
-  },
-  props: ["newsId"]
+  }
 };
 </script>
 
