@@ -111,6 +111,11 @@ export default {
     },
     addToShopCar() {
       this.ballFlag = !this.ballFlag;
+      // { id:商品的id,count:要购买的数量，price:商品的单价,selected:true }
+      // 拼接出一个，要保存到 store 中 car 数组里的 商品信息对象
+      var goodsInfo = { goodsId:this.goodsId,count:this.goodsNum,price:this.goodsInfo.sellPrice,selected:true }
+      // 调用 store 中的 mutations 来将商品加入购物车
+      this.$store.commit('addToCar',goodsInfo)
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)";
